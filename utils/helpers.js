@@ -51,9 +51,9 @@ export function getMetricMetaInfo(metric) {
     const info = {
         run: {
             displayName:'Run',
-            max:'20',
+            max:20,
             unit:'km',
-            step:'1',
+            step:1,
             type:'steppers',
             getIcon(){
                 return(
@@ -69,9 +69,9 @@ export function getMetricMetaInfo(metric) {
         },
         bike: { 
             displayName:'Bike',
-            max:'70',
+            max:70,
             unit:'km',
-            step:'1',
+            step:1,
             type:'steppers',
             getIcon(){
                 return(
@@ -86,9 +86,9 @@ export function getMetricMetaInfo(metric) {
             }},
         swim: {
             displayName:'Swim',
-            max:'15',
+            max:15,
             unit:'km',
-            step:'1',
+            step:1,
             type:'steppers',
             getIcon(){
                 return(
@@ -104,9 +104,9 @@ export function getMetricMetaInfo(metric) {
         },
         sleep: {
             displayName:'Sleep',
-            max:'24',
+            max:24,
             unit:'Hours',
-            step:'1',
+            step:1,
             type:'slider',
             getIcon(){
                 return(
@@ -122,9 +122,9 @@ export function getMetricMetaInfo(metric) {
         },
         eat: {
             displayName:'Eat',
-            max:'10',
+            max:10,
             unit:'rating',
-            step:'1',
+            step:1,
             type:'slider',
             getIcon(){
                 return(

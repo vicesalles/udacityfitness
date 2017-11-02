@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import { getMetricMetaInfo } from '../utils/helpers';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { getMetricMetaInfo, timeToString } from '../utils/helpers';
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import Stepper from './Stepper';
-import Slider from './Slider';
+import UdaStepper from './UdaStepper';
+import UdaSlider from './UdaSlider';
 import DateHeader from './DateHeader';
+
+function SubmitBtn({onPress}){
+    return(
+        <TouchableOpacity onPress={onPress}><Text>Submit</Text></TouchableOpacity>
+    )
+}
 
 export default class AddEntry extends Component {
     state = {
@@ -40,7 +46,7 @@ export default class AddEntry extends Component {
     //Slider
     slide = (metric, value) => {
 
-        this.setState(() => {
+        this.setState((state) => {
             return {
                 ...state,
                 [metric]: value
@@ -48,11 +54,26 @@ export default class AddEntry extends Component {
         })
     }
 
+    //Submit changes
+
+    submit = () => {
+        const key = timeToString();
+        const entry = this.state;
+
+        this.setState({
+            run: 0,
+            bike: 0,
+            swim: 0,
+            sleep: 0,
+            eat: 0
+        })
+    }
+
     render() {
         const metaInfo = getMetricMetaInfo();
         return (
             <View>
-                <DateHeader date={new Date().toLocalDateString()}/>
+                <DateHeader date={new Date().toString()}/>
                 {Object.keys(metaInfo).map((key)=>{
                     const {getIcon,type,...rest} = metaInfo[key];
                     const value = this.state[key];
@@ -60,8 +81,10 @@ export default class AddEntry extends Component {
                         <View key={key}>
                             {getIcon()}
                             {type === 'slider'
-                            ?<Slider value={value} onChange={(value)=> this.slide(key,value)} {...rest}/>
-                            :<Stepper value={value}
+                            ? <UdaSlider value={value} 
+                            onChange={(value)=> this.slide(key,value)} 
+                            {...rest}/>
+                            : <UdaStepper value={value}
                             onIncrement={()=>{this.increment(key)}}
                             onDecrement={()=>{this.decrement(key)}}
                             {...rest}/>}
@@ -69,6 +92,7 @@ export default class AddEntry extends Component {
                     )
 
                 })}
+                <SubmitBtn onPress={this.submit}/>
             </View>
         )
     }
