@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Platform, StyleSheet } from 'react-native';
 import { getMetricMetaInfo, timeToString } from '../utils/helpers';
 import {submitEntry,deleteEntry} from '../utils/api';
 import {connect} from 'react-redux';
@@ -10,12 +10,49 @@ import UdaStepper from './UdaStepper';
 import UdaSlider from './UdaSlider';
 import DateHeader from './DateHeader';
 import TextButton from './TextButton';
+import {white, purple, grey } from '../utils/colors';
 
 function SubmitBtn({ onPress }) {
     return (
-        <TouchableOpacity onPress={onPress}><Text>Submit</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.submitButton} onPress={onPress}><Text style={styles.submitButtonText}>Submit</Text></TouchableOpacity>
     )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        padding:20,
+        backgroundColor: white
+    },
+    row:{
+        flexDirection:'row',
+        flex:1,
+        alignItems:'center'
+    },
+    center:{
+        alignItems:'center',
+        justifyContent:'center',
+        flex:1,
+        marginLeft:30,
+        marginRight:30
+    },
+    submitButton:{
+        backgroundColor: purple,
+        padding: 10,
+        paddingLeft: 30,
+        paddingRight:30,
+        height: 45,
+        borderRadius:2,
+        alignSelf: 'flex-end',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    submitButtonText:{
+        color:white,
+        fontSize:22,
+        textAlign: 'center'
+    }
+})
 
 class AddEntry extends Component {
     state = {
@@ -89,13 +126,13 @@ class AddEntry extends Component {
     }
     render() {
         const metaInfo = getMetricMetaInfo();
-
+        
         if (this.props.alreadyLogged) {
             return (
-                <View>
-                    <Ionicons name='ios-happy-outline' size={100} />
+                <View style={styles.center}>
+                    <Ionicons name='md-happy' size={100} />
                     <Text>You already Logged your today's activity</Text>
-                    <TextButton onPress={this.reset}>
+                    <TextButton style={{padding:10, backgroundColor:purple, borderRadius:8}} onPress={this.reset}>
                         Reset
                     </TextButton>
                 </View>
@@ -103,13 +140,14 @@ class AddEntry extends Component {
         } else {
 
             return (
-                <View>
+                <View style={styles.container}>
+                <Text>{this.props.alreadyLogged}</Text>
                     <DateHeader date={new Date().toString()} />
                     {Object.keys(metaInfo).map((key) => {
                         const { getIcon, type, ...rest } = metaInfo[key];
                         const value = this.state[key];
                         return (
-                            <View key={key}>
+                            <View key={key} style={styles.row}>
                                 {getIcon()}
                                 {type === 'slider'
                                     ? <UdaSlider value={value}
@@ -137,4 +175,4 @@ function mapStateToProps (state){
     }
 }
 
-export default connect()(AddEntry);
+export default connect(mapStateToProps)(AddEntry);
