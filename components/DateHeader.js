@@ -3,6 +3,6 @@ import { Text } from 'react-native';
 
 export default function DateHeader({date}){
     return(
-        <Text>{date}</Text>
+        <Text>{date}</Text>        
     )
 }

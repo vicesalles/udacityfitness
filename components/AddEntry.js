@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { getMetricMetaInfo, timeToString } from '../utils/helpers';
-import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import {submitEntry,deleteEntry} from '../utils/api';
+import { FontAwesome, MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import UdaStepper from './UdaStepper';
 import UdaSlider from './UdaSlider';
 import DateHeader from './DateHeader';
+import TextButton from './TextButton';
 
-function SubmitBtn({onPress}){
-    return(
+function SubmitBtn({ onPress }) {
+    return (
         <TouchableOpacity onPress={onPress}><Text>Submit</Text></TouchableOpacity>
     )
 }
@@ -67,33 +69,53 @@ export default class AddEntry extends Component {
             sleep: 0,
             eat: 0
         })
-    }
 
+        submitEntry({key,entry});
+    }
+    reset = () => {
+        const key = timeToString();
+        removeEntry(key);
+
+    }
     render() {
         const metaInfo = getMetricMetaInfo();
-        return (
-            <View>
-                <DateHeader date={new Date().toString()}/>
-                {Object.keys(metaInfo).map((key)=>{
-                    const {getIcon,type,...rest} = metaInfo[key];
-                    const value = this.state[key];
-                    return(
-                        <View key={key}>
-                            {getIcon()}
-                            {type === 'slider'
-                            ? <UdaSlider value={value} 
-                            onChange={(value)=> this.slide(key,value)} 
-                            {...rest}/>
-                            : <UdaStepper value={value}
-                            onIncrement={()=>{this.increment(key)}}
-                            onDecrement={()=>{this.decrement(key)}}
-                            {...rest}/>}
-                        </View>
-                    )
 
-                })}
-                <SubmitBtn onPress={this.submit}/>
-            </View>
-        )
+        if (this.props.alreadyLogged) {
+            return (
+                <View>
+                    <Ionicons name='ios-happy-outline' size={100} />
+                    <Text>You already Logged your today's activity</Text>
+                    <TextButton onPress={this.reset}>
+                        Reset
+                    </TextButton>
+                </View>
+            )
+        } else {
+
+            return (
+                <View>
+                    <DateHeader date={new Date().toString()} />
+                    {Object.keys(metaInfo).map((key) => {
+                        const { getIcon, type, ...rest } = metaInfo[key];
+                        const value = this.state[key];
+                        return (
+                            <View key={key}>
+                                {getIcon()}
+                                {type === 'slider'
+                                    ? <UdaSlider value={value}
+                                        onChange={(value) => this.slide(key, value)}
+                                        {...rest} />
+                                    : <UdaStepper value={value}
+                                        onIncrement={() => { this.increment(key) }}
+                                        onDecrement={() => { this.decrement(key) }}
+                                        {...rest} />}
+                            </View>
+                        )
+
+                    })}
+                    <SubmitBtn onPress={this.submit} />
+                </View>
+            )
+        }
     }
 }
