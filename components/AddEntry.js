@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Platform, StyleSheet } from 'react-native';
 import { getMetricMetaInfo, timeToString } from '../utils/helpers';
-import {submitEntry,deleteEntry} from '../utils/api';
+import {submitEntry,removeEntry} from '../utils/api';
 import {connect} from 'react-redux';
 import { addEntry } from '../actions';
 import { getDailyReminderValue } from '../utils/helpers';
@@ -17,6 +17,8 @@ function SubmitBtn({ onPress }) {
         <TouchableOpacity style={styles.submitButton} onPress={onPress}><Text style={styles.submitButtonText}>Submit</Text></TouchableOpacity>
     )
 }
+
+//PASSO AL VIDEO DE DESPRES DE DIMENSIONS API
 
 const styles = StyleSheet.create({
     container:{
