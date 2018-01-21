@@ -6,8 +6,8 @@ import {connect} from 'react-redux';
 import { addEntry } from '../actions';
 import { getDailyReminderValue } from '../utils/helpers';
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
-import UdaStepper from './UdaStepper';
-import UdaSlider from './UdaSlider';
+import UdaciSteppers from './UdaciSteppers';
+import UdaciSlider from './UdaciSlider';
 import DateHeader from './DateHeader';
 import TextButton from './TextButton';
 import {white, purple, grey } from '../utils/colors';
@@ -152,10 +152,10 @@ class AddEntry extends Component {
                             <View key={key} style={styles.row}>
                                 {getIcon()}
                                 {type === 'slider'
-                                    ? <UdaSlider value={value}
+                                    ? <UdaciSlider value={value}
                                         onChange={(value) => this.slide(key, value)}
                                         {...rest} />
-                                    : <UdaStepper value={value}
+                                    : <UdaciSteppers value={value}
                                         onIncrement={() => { this.increment(key) }}
                                         onDecrement={() => { this.decrement(key) }}
                                         {...rest} />}

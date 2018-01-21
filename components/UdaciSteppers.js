@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 import {white,purple,grey} from '../utils/colors';
-export default function UdaStepper({ value, max, unit, step, onIncrement, onDecrement }) {
+export default function UdaciSteppers({ value, max, unit, step, onIncrement, onDecrement }) {
     return (
         <View style={styles.row}>
             <View style={styles.buttons}>

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Slider, StyleSheet } from 'react-native';
 import {grey} from '../utils/colors'
 
-export default function UdaSlider({max,unit,step,value,onChange}) {
+export default function UdaciSlider({max,unit,step,value,onChange}) {
     return (
         <View style={{flexDirection:'row',flex:1}}>
             <Slider
